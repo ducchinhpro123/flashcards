@@ -32,7 +32,8 @@ if config('ENVIRONMENT') == 'production':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['flashcards-duchi.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://flashcards-duchi.up.railway.app']
 
 # Application definition
 
