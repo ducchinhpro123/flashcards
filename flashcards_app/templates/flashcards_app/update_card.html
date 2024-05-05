@@ -1,0 +1,38 @@
+{% extends 'flashcards_app/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block link-css %}
+    <link rel="stylesheet" href="{% static 'flashcards_app/content-styles.css' %}" type="text/css">
+
+{% endblock %}
+
+{% block content %}
+    <h1>Update card</h1>
+    <hr>
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close btn-close" data-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <form method="post" class="ck-content">
+        {% csrf_token %}
+        {{ form.media }}
+        {% for field in form %}
+            <div class="">
+                <div><label for="{{ field.id_for_label }}" class="text-dark">{{ field.label }}: </label></div>
+                {{ field }}
+            </div>
+            {% if field.errors %}
+                <div class="alert alert-danger">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn btn-outline-primary">Update card</button>
+    </form>
+{% endblock %}
