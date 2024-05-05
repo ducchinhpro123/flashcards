@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,7 +31,7 @@ if config('ENVIRONMENT') == 'production':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ['flashcards-duchi.up.railway.app']
+ALLOWED_HOSTS = ['flashcards-duchi.up.railway.app', 'localhost']
 CSRF_TRUSTED_ORIGINS = ['https://flashcards-duchi.up.railway.app']
 
 # Application definition
@@ -116,8 +115,12 @@ import dj_database_url
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'flashcards',
+        'USER': 'duchi',
+        'PASSWORD': '231132',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

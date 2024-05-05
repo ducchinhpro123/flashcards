@@ -4,7 +4,7 @@ build:
 services:
   web:
     scale: 1
-    startCommand: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    startCommand: ["gunicorn", "flashcards.wsgi", "--bind", "0.0.0.0:8000"]
     port: 8000
     envVars:
       - DJANGO_SETTINGS_MODULE
