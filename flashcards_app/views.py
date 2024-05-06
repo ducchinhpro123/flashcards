@@ -104,7 +104,6 @@ def add_deck(request):
             return render(request, 'flashcards_app/add_deck.html', context={"form": form})
     else:
         form = DeckForm()
-
         return render(request, 'flashcards_app/add_deck.html', context={"form": form})
 
 

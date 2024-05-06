@@ -23,20 +23,20 @@
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 {% for tag in tags %}
                     <input type="radio" class="btn-check" name="tag_name" id="btnradio{{ tag.id }}"
-                           value="{{ tag.name }}" autocomplete="off">
+                           value="{{ tag.name }}" autocomplete="off" {% if forloop.first %}checked{% endif %}>
                     <label class="btn btn-outline-primary" for="btnradio{{ tag.id }}">{{ tag.name }}</label>
                 {% endfor %}
             </div>
         </form>
         <h3 class="mt-1">{{ cards.all.count }} Card{{ cards.all.count|pluralize }}</h3>
         <div class="container">
-            <div class="row row-cols-3">
+            <div class="row">
                 {% for card in cards %}
-                    <div class="col">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                         <div class="flipCard">
                             <div class="card" onclick="this.classList.toggle('flipped');">
                                 <div class="side front">{{ card.question }}</div>
-                                <div class="side back">{{ card.answer|safe }}</div>
+                                <div class="side back" style="font-size: x-large">{{ card.answer|safe }}</div>
                             </div>
                         </div>
                     </div>
@@ -58,6 +58,11 @@
 
 
     <script>
+        $(document).ready(function () {
+            if (!$('.btn-check:checked').length) {
+                $('.btn-check:first').trigger('change')
+            }
+        })
         let selectedTag = localStorage.getItem('selectedTag');
         if (selectedTag) {
             $('#' + selectedTag).prop('checked', true);
