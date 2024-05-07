@@ -29,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 if config('ENVIRONMENT') == 'production':
     DEBUG = False
 else:
-    DEBUG = False
+    DEBUG = True
 
 ALLOWED_HOSTS = ['flashcards-duchi.up.railway.app', 'localhost']
 CSRF_TRUSTED_ORIGINS = ['https://flashcards-duchi.up.railway.app']
@@ -168,7 +168,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
