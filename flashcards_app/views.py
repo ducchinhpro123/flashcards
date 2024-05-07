@@ -3,12 +3,12 @@ import random
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.db.models import Max
+from django.forms import formset_factory
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from .forms import TagForm, CardForm, DeckForm
+from .forms import TagForm, CardForm, DeckForm, DeckAndTagsForm, CardFormTest
 from .models import *
 
 
@@ -80,6 +80,9 @@ def add_card(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Card added successfully.")
+            # Delete this session, if a new card is added, it'll fetch again
+            if 'card_ids' in request.session:
+                del request.session['card_ids']
             return redirect('flashcards_app:home')
         else:
             messages.error(request, "Invalid data entry.")
@@ -87,18 +90,51 @@ def add_card(request):
     else:
         form = CardForm(request.POST or None, user=request.user)
         tag_form = TagForm()
-        return render(request, 'flashcards_app/add_card.html', context={"form": form, "tag_form": tag_form})
+        deck_form = DeckForm()
+        return render(request, 'flashcards_app/add_card.html',
+                      context={"form": form, "tag_form": tag_form, "deck_form": deck_form})
+
+
+def add_multiple_cards(request):
+    extra_number = request.GET.get('extra_number')
+    if extra_number is None:
+        extra_number = 1  # default value for number of form
+    CardFormSet = formset_factory(CardFormTest, extra=int(extra_number))
+    if request.method == "POST":
+        deck_and_tags_form = DeckAndTagsForm(request.POST, user=request.user)
+        formset = CardFormSet(request.POST)
+        if deck_and_tags_form.is_valid() and formset.is_valid():
+            deck = deck_and_tags_form.cleaned_data['deck']
+            tags = deck_and_tags_form.cleaned_data['tags']
+            for form in formset:
+                card = form.save(commit=False)
+                card.deck = deck
+                card.save()
+                card.tags.set(tags)
+            messages.success(request, "Cards added successfully.")
+            if 'card_ids' in request.session:
+                del request.session['card_ids']
+            return redirect('flashcards_app:home')
+        else:
+            messages.error(request, "Invalid data entry.")
+    else:
+        deck_and_tags_form = DeckAndTagsForm(user=request.user)
+        formset = CardFormSet()
+    return render(request, 'flashcards_app/add_multiple_cards.html',
+                  context={"formset": formset, "deck_and_tags_form": deck_and_tags_form})
 
 
 def add_deck(request):
     if request.method == "POST":
         form = DeckForm(request.POST)
+        next_url = request.POST.get('next', '/')
+
         if form.is_valid():
             deck = form.save(commit=False)
             deck.user = request.user
             deck.save()
             messages.success(request, "Deck added successfully.")
-            return redirect('flashcards_app:home')
+            return redirect(next_url)
         else:
             messages.error(request, "Invalid data entry.")
             return render(request, 'flashcards_app/add_deck.html', context={"form": form})
@@ -124,19 +160,18 @@ def cards_view(request):
 
 
 def next_card(request):
-    max_id = Card.objects.all().aggregate(max_id=Max("id"))['max_id']
-    random_id = random.randint(1, max_id)
-
-    next_card_one = Card.objects.filter(id=random_id, deck__user=request.user).first()
-
-    while not next_card_one:
-        random_id = random.randint(1, max_id)
-        next_card_one = Card.objects.filter(id=random_id, deck__user=request.user).first()
-
-    if next_card_one:
-        return redirect('flashcards_app:memorize', card_id=next_card_one.id)
+    if 'card_ids' in request.session:
+        card_ids = request.session['card_ids']
     else:
+        card_ids = list(Card.objects.filter(deck__user=request.user).values_list('id', flat=True))
+        request.session['card_ids'] = card_ids
+
+    if not card_ids:
         return redirect('flashcards_app:home')
+    random_id = random.choice(card_ids)
+    next_card_one = Card.objects.get(id=random_id)
+
+    return redirect('flashcards_app:memorize', card_id=next_card_one.id)
 
 
 def card_detail(request, card_id):

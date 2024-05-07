@@ -58,11 +58,7 @@
 
 
     <script>
-        $(document).ready(function () {
-            if (!$('.btn-check:checked').length) {
-                $('.btn-check:first').trigger('change')
-            }
-        })
+
         let selectedTag = localStorage.getItem('selectedTag');
         if (selectedTag) {
             $('#' + selectedTag).prop('checked', true);

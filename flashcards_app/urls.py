@@ -22,5 +22,6 @@ urlpatterns = [
 
     path("update-card/<int:card_id>/", views.update_card, name="update-card"),
     path("update-tag/<int:tag_id>/", views.update_tag, name="update-tag"),
+    path("add-multiple-cards/", views.add_multiple_cards, name="add-multiple-cards"),
 
 ]

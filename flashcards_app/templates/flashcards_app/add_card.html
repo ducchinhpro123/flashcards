@@ -7,88 +7,138 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Add card</h1>
-    <hr>
     <div class="container">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="close btn-close" data-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <form method="post" class="ck-content">
-        {% csrf_token %}
-        {{ form.media }}
-        {% for field in form %}
-            <div class="">
-                <div>
-                    <label for="{{ field.id_for_label }}" class="text-dark">{{ field.label }}: </label>
-                </div>
-                {% if field.label == 'Tags' %}
-                    <div class="d-flex flex-row align-items-center">
-                        {{ field }}
-                        <button type="button" style="margin-left: 7px"
-                                data-toggle="modal"
-                                data-target="#GFG">
-                            + Add Tag
-                        </button>
+        <h1>Add card</h1>
+        <hr>
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close btn-close" data-dismiss="alert" aria-label="Close"></button>
                     </div>
-                {% else %}
-                    {{ field }}
-                {% endif %}
-            </div>
-            {% if field.errors %}
-                <div class="alert alert-danger">
-                    {{ field.errors }}
-                </div>
+                {% endfor %}
             {% endif %}
-        {% endfor %}
-        <button type="submit" class="btn btn-outline-primary">Save</button>
-    </form>
-
-
-    <div class="modal fade" id="GFG">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        Add tag
-                    </h5>
-
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{% url 'flashcards_app:add-tag' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        {% for field in tag_form %}
-                            <div>
-                                <label for="{{ field.id_for_label }}" class="text-dark">{{ field.label }}: </label>
-
-                            </div>
+        </div>
+        <form method="post" class="ck-content">
+            {% csrf_token %}
+            {{ form.media }}
+            {% for field in form %}
+                <div class="">
+                    <div>
+                        <label for="{{ field.id_for_label }}" class="text-dark">{{ field.label }}: </label>
+                    </div>
+                    {% if field.label == 'Tags' %}
+                        <div class="d-flex flex-row align-items-center">
                             {{ field }}
-                            {% if field.errors %}
-                                <div class="alert alert-danger">
-                                    {{ field.errors }}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                        <button type="submit" class="btn btn-outline-primary">Add tag</button>
-                    </form>
+                            <button type="button" style="margin-left: 7px"
+                                    data-toggle="modal"
+                                    data-target="#GFG">
+                                + Add Tag
+                            </button>
+                        </div>
+                    {% elif field.label == 'Deck' %}
+                        <div class="d-flex flex-row align-items-center">
+                            {{ field }}
+                            <button type="button" style="margin-left: 7px"
+                                    data-toggle="modal"
+                                    data-target="#ADD-DECK">
+                                + Add Deck
+                            </button>
+                        </div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn"
-                            data-dismiss="modal">
-                        Close
-                    </button>
+                {% if field.errors %}
+                    <div class="alert alert-danger">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <button type="submit" class="btn btn-outline-primary">Save</button>
+        </form>
 
+
+        <div class="modal fade" id="GFG">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Add tag
+                        </h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{% url 'flashcards_app:add-tag' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            {% for field in tag_form %}
+                                <div>
+                                    <label for="{{ field.id_for_label }}" class="text-dark">{{ field.label }}: </label>
+
+                                </div>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ field.errors }}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <button type="submit" class="btn btn-outline-primary">Add tag</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="ADD-DECK">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Add Deck
+                        </h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{% url 'flashcards_app:add-deck' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+
+                            {% for field in deck_form %}
+                                <div class="">
+                                    <div><label for="{{ field.id_for_label }}"
+                                                class="text-dark">{{ field.label }}: </label></div>
+                                    {{ field }}
+                                </div>
+                                {% if field.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ field.errors }}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <button type="submit" class="btn btn-outline-primary">Add deck</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}
 {% block link-scripts %}
     <script src=
