@@ -11,6 +11,7 @@ urlpatterns = [
     path("add-card/", views.add_card, name="add-card"),
     path("add-deck/", views.add_deck, name="add-deck"),
     path("login/", views.login_form, name="login"),
+    path("change-password/", views.change_password, name="change-password"),
     path("logout/", views.logout_now, name="logout"),
     path("register/", views.RegisterView.as_view(), name="register"),
 

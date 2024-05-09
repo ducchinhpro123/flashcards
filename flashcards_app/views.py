@@ -207,6 +207,25 @@ def tags_view(request):
     return render(request, 'flashcards_app/tags_view.html', context={"tags": tags})
 
 
+def change_password(request):
+    user = request.user
+    if request.method == "POST":
+        old_password = request.POST.get('old_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+        if new_password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return render(request, 'flashcards_app/change_password.html')
+        if user.check_password(old_password):
+            user.set_password(new_password)
+            user.save()
+            messages.success(request, "Password changed successfully.")
+            return redirect('flashcards_app:home')
+        else:
+            messages.error(request, "Invalid old password.")
+    return render(request, 'flashcards_app/change_password.html')
+
+
 def delete_card(request, card_id):
     try:
         card = Card.objects.get(pk=card_id)
