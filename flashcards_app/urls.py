@@ -21,6 +21,7 @@ urlpatterns = [
     path("memorize/<int:card_id>/", views.card_detail, name="memorize"),
 
     path("update-card/<int:card_id>/", views.update_card, name="update-card"),
+    path("delete-card/<int:card_id>/", views.delete_card, name="delete-card"),
     path("update-tag/<int:tag_id>/", views.update_tag, name="update-tag"),
     path("add-multiple-cards/", views.add_multiple_cards, name="add-multiple-cards"),
 

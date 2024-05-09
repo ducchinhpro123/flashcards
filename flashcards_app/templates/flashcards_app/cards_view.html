@@ -23,7 +23,7 @@
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 {% for tag in tags %}
                     <input type="radio" class="btn-check" name="tag_name" id="btnradio{{ tag.id }}"
-                           value="{{ tag.name }}" autocomplete="off" {% if forloop.first %}checked{% endif %}>
+                           value="{{ tag.name }}" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio{{ tag.id }}">{{ tag.name }}</label>
                 {% endfor %}
             </div>
@@ -31,17 +31,28 @@
         <h3 class="mt-1">{{ cards.all.count }} Card{{ cards.all.count|pluralize }}</h3>
         <div class="container">
             <div class="row">
-                {% for card in cards %}
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="flipCard">
-                            <div class="card" onclick="this.classList.toggle('flipped');">
-                                <div class="side front">{{ card.question }}</div>
-                                <div class="side back" style="font-size: x-large">{{ card.answer|safe }}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                {% endfor %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Question</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for card in cards %}
+                        <tr>
+                            <th scope="row"><a href="{% url 'flashcards_app:delete-card' card_id=card.id %}"><i
+                                    class="bi bi-trash"></i></a> {{ card.id }}</th>
+                            <td>{{ card.question }}
+                                <div class="p-3 bg-body"
+                                     style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                    {{ card.answer|safe }}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
         <hr>
@@ -56,9 +67,7 @@
             integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
     <script>
-
         let selectedTag = localStorage.getItem('selectedTag');
         if (selectedTag) {
             $('#' + selectedTag).prop('checked', true);
@@ -67,5 +76,6 @@
             localStorage.setItem('selectedTag', $(this).attr('id'));
             $('#tagForm').submit();
         })
+
     </script>
 {% endblock %}

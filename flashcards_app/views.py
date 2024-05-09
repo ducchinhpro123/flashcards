@@ -3,6 +3,7 @@ import random
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ObjectDoesNotExist
 from django.forms import formset_factory
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -169,7 +170,13 @@ def next_card(request):
     if not card_ids:
         return redirect('flashcards_app:home')
     random_id = random.choice(card_ids)
-    next_card_one = Card.objects.get(id=random_id)
+
+    try:
+        next_card_one = Card.objects.get(id=random_id)
+    except ObjectDoesNotExist:
+        if 'card_ids' in request.session:
+            del request.session['card_ids']
+        return redirect('flashcards_app:cards')
 
     return redirect('flashcards_app:memorize', card_id=next_card_one.id)
 
@@ -198,6 +205,17 @@ def update_card(request, card_id):
 def tags_view(request):
     tags = Tag.objects.filter(user=request.user)
     return render(request, 'flashcards_app/tags_view.html', context={"tags": tags})
+
+
+def delete_card(request, card_id):
+    try:
+        card = Card.objects.get(pk=card_id)
+        card.delete()
+        if 'card_ids' in request.session:
+            del request.session['card_ids']
+    except ObjectDoesNotExist:
+        messages.error(request, "Not found.")
+    return redirect("flashcards_app:cards")
 
 
 def update_tag(request, tag_id):
