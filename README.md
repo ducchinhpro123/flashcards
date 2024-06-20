@@ -6,6 +6,9 @@ This flashcard app helps memorize keywords, and its body is easy to use. It is b
 idea for this project came from [Anki](https://apps.ankiweb.net/).
 It supports uploading CSV files to add flashcards quickly.
 
+## Home page
+![Home page](2024-06-20_16-09-home-page.png)
+
 ## Backend
 
 - **Django**: A high-level Python web framework that encourages rapid development and clean, pragmatic design.
@@ -38,7 +41,7 @@ The CSV file should be structured as follows:
 
 Here's an example of how your CSV file should look:
 
-![Flashcard csv](2024-06-20 16-00-28.png)
+![Flashcard csv](2024-06-20_6-00-28.png)
 
 ### Important Note
 
