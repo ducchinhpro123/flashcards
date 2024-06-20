@@ -32,32 +32,37 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'flashcards_app:add-tag' %}">Add tag</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'flashcards_app:add-card' %}">Add card</a>
-                    </li>
-                    {#                    <li class="nav-item">#}
-                    {#                        <a class="nav-link" href="{% url 'flashcards_app:add-multiple-cards' %}">Add multiple cards</a>#}
-                    {#                    </li>#}
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           data-toggle="modal" style="cursor: pointer"
-                           data-target="#GET-EXTRA-NUMBER">
-                            + Add multiple cards
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'flashcards_app:cards' %}">Cards</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'flashcards_app:tags' %}">Tags</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'flashcards_app:next-card' %}">Memorized</a>
-                    </li>
                     {% if user.is_authenticated %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'flashcards_app:add-tag' %}">Add tag</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'flashcards_app:add-card' %}">Add card</a>
+                        </li>
+
+                        {#                    <li class="nav-item">#}
+                        {#                        <a class="nav-link" href="{% url 'flashcards_app:add-multiple-cards' %}">Add multiple cards</a>#}
+                        {#                    </li>#}
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               data-toggle="modal" style="cursor: pointer"
+                               data-target="#GET-EXTRA-NUMBER">
+                                + Add multiple cards
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'flashcards_app:cards' %}">Cards</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'flashcards_app:tags' %}">Tags</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'flashcards_app:next-card' %}">Memorized</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'flashcards_app:upload-csv' %}">Upload Csv</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'flashcards_app:logout' %}">Logout</a>
                         </li>
@@ -85,10 +90,10 @@
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li>{% endcomment %}
                 </ul>
-                <form class="d-flex">
+                {% comment %}<form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                </form>{% endcomment %}
             </div>
         </div>
     </nav>

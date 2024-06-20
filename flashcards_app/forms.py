@@ -4,6 +4,10 @@ from django.forms import formset_factory
 from flashcards_app.models import Tag, Card, Deck
 
 
+class CsvForm(forms.Form):
+    file = forms.FileField()
+
+
 class TagForm(forms.ModelForm):
     class Meta:
         model = Tag
@@ -45,8 +49,6 @@ class CardFormTest(forms.ModelForm):
     class Meta:
         model = Card
         fields = ['question', 'answer']
-
-
 
 
 class DeckForm(forms.ModelForm):

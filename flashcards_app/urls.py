@@ -25,5 +25,5 @@ urlpatterns = [
     path("delete-card/<int:card_id>/", views.delete_card, name="delete-card"),
     path("update-tag/<int:tag_id>/", views.update_tag, name="update-tag"),
     path("add-multiple-cards/", views.add_multiple_cards, name="add-multiple-cards"),
-
+    path("upload-csv/", views.upload_csv, name="upload-csv"),
 ]

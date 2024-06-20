@@ -15,6 +15,10 @@ class CardAdmin(admin.ModelAdmin):
     # inlines = [InlineTag]
 
 
+class DeckAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name']
+
+
 admin.site.register(Card, CardAdmin)
 admin.site.register(Tag)
-admin.site.register(Deck)
+admin.site.register(Deck, DeckAdmin)

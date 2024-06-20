@@ -1,4 +1,5 @@
 import random
+import csv
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -9,7 +10,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from .forms import TagForm, CardForm, DeckForm, DeckAndTagsForm, CardFormTest
+from .forms import TagForm, CardForm, DeckForm, DeckAndTagsForm, CardFormTest, CsvForm
 from .models import *
 
 
@@ -254,3 +255,49 @@ def update_tag(request, tag_id):
     else:
         form = TagForm(instance=tag)
         return render(request, 'flashcards_app/update_tag.html', context={"form": form})
+
+
+def upload_csv(request):
+    if request.method == 'POST':
+        form = CsvForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['file']
+            cards = read_cards_from_csv(csv_file)
+            user = request.user
+            for card_data in cards:
+                try:
+                    deck = Deck.objects.get(id=card_data['deck_id'], user=user)
+                except Deck.DoesNotExist:
+                    continue
+                card = Card.objects.create(question=card_data['question'], answer=card_data['answer'], deck=deck)
+                cards = card_data['tags']
+
+                for tag_name in cards:
+                    tag, created = Tag.objects.get_or_create(name=tag_name, user=user)
+                    card.tags.add(tag)
+                card.save()
+            card_ids = list(Card.objects.filter(deck__user=request.user).values_list('id', flat=True))
+            request.session['card_ids'] = card_ids
+            return redirect('flashcards_app:home')
+    else:
+        form = CsvForm()
+    return render(request, 'flashcards_app/upload_csv.html',
+                  {'form': form})
+
+
+def read_cards_from_csv(file):
+    cards = []
+
+    file_data = file.read().decode('utf-8').splitlines()
+    reader = csv.reader(file_data)
+    next(reader)  # Skip header row
+    for row in reader:
+        card = {
+            'question': row[0],
+            'answer': row[1],
+            'deck_id': row[2],  # assume the deck existed, otherwise: except Deck.DoesNotExist: continue
+            'tags': row[3].split(';') if row[3] else [],
+
+        }
+        cards.append(card)
+    return cards

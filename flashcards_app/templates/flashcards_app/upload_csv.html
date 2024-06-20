@@ -1,0 +1,14 @@
+{% extends 'flashcards_app/base.html' %}
+
+{% block content %}
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="mt-3">
+            <h1>Upload CSV</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

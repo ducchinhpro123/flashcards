@@ -16,6 +16,7 @@
     </div>
     <div class="mt-3 p-5 bg-light">
         <h1>Flashcards</h1>
+
         <hr>
         {% if user.is_authenticated %}
             <h1>{{ decks_count }} Deck{{ decks_count|pluralize }}</h1>
@@ -27,7 +28,8 @@
 
             <a href="{% url 'flashcards_app:add-deck' %}">Add deck</a>
         {% else %}
-            <a href="{% url 'flashcards_app:login' %}">Login</a>
+            Welcome to Flashcards - made by <i><a href="https://github.com/ducchinhpro123" target="_blank">
+            ducchinhpro123</a></i>. Please <a href="{% url 'flashcards_app:login' %}">login</a> to continue.
         {% endif %}
     </div>
 {% endblock %}

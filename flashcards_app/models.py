@@ -7,9 +7,9 @@ class Card(models.Model):
     question = models.CharField(max_length=255)
     answer = CKEditor5Field('Answer', config_name='extends')
     deck = models.ForeignKey('Deck', on_delete=models.CASCADE)
-    tags = models.ManyToManyField('Tag', related_name='cards', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    tags = models.ManyToManyField('Tag', related_name='cards', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     last_reviewed_at = models.DateTimeField(null=True, blank=True)
     review_interval = models.IntegerField(default=1, null=True, blank=True)
 
