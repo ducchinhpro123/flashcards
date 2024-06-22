@@ -2,14 +2,16 @@ import csv
 
 # Define the data you want to include in the CSV
 cards_data = [
-    {"question": "What is the capital of France?", "answer": "Paris", "deck_id": 1, "tags": "geography;capitals"},
-    {"question": "What is the largest planet in our solar system?", "answer": "Jupiter", "deck_id": 2,
-     "tags": "astronomy;planets"},
-    # Add more cards here
-    {"question": "What is the speed of light?", "answer": "299,792,458 meters per second", "deck_id": 3,
-     "tags": "physics;constants"},
-    {"question": "Who wrote 'To Kill a Mockingbird'?", "answer": "Harper Lee", "deck_id": 4,
-     "tags": "literature;authors"},
+    {"question": "Elicit", "answer": "To draw out a response or reaction from someone.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Ambiguous", "answer": "Open to more than one interpretation; having a double meaning.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Convey", "answer": "To communicate or make known.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Diminish", "answer": "To make or become less.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Coherent", "answer": "Logical and consistent.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Scrutinize", "answer": "To examine or inspect closely and thoroughly.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Plausible", "answer": "Seeming reasonable or probable.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Inherent", "answer": "Existing in something as a permanent, essential, or characteristic attribute.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Mitigate", "answer": "To make less severe, serious, or painful.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Conundrum", "answer": "A confusing and difficult problem or question.", "deck_id": 1, "tags": "vocabulary;intermediate"}
 ]
 
 # Define the CSV file name

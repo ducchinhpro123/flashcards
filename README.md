@@ -4,7 +4,7 @@
 
 This flashcard app helps memorize keywords, and its body is easy to use. It is beneficial for memorizing vocabulary. The
 idea for this project came from [Anki](https://apps.ankiweb.net/).
-It supports uploading CSV files to add flashcards quickly.
+It supports uploading CSV files to add flashcards quickly and export as a pdf file.
 
 ## Home page
 ![Home page](2024-06-20_16-09-home-page.png)

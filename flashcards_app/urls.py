@@ -26,4 +26,5 @@ urlpatterns = [
     path("update-tag/<int:tag_id>/", views.update_tag, name="update-tag"),
     path("add-multiple-cards/", views.add_multiple_cards, name="add-multiple-cards"),
     path("upload-csv/", views.upload_csv, name="upload-csv"),
+    path("export-pdf/", views.export_cards_to_pdf, name="export-pdf"),
 ]

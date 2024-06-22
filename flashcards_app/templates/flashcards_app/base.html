@@ -64,6 +64,9 @@
                             <a class="nav-link" href="{% url 'flashcards_app:upload-csv' %}">Upload Csv</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'flashcards_app:export-pdf' %}">Export cards</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'flashcards_app:logout' %}">Logout</a>
                         </li>
                     {% else %}
