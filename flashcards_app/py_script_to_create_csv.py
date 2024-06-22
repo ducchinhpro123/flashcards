@@ -1,18 +1,14 @@
 import csv
 
 # Define the data you want to include in the CSV
-cards_data = [
-    {"question": "Elicit", "answer": "To draw out a response or reaction from someone.", "deck_id": 1, "tags": "vocabulary;intermediate"},
-    {"question": "Ambiguous", "answer": "Open to more than one interpretation; having a double meaning.", "deck_id": 1, "tags": "vocabulary;intermediate"},
-    {"question": "Convey", "answer": "To communicate or make known.", "deck_id": 1, "tags": "vocabulary;intermediate"},
-    {"question": "Diminish", "answer": "To make or become less.", "deck_id": 1, "tags": "vocabulary;intermediate"},
-    {"question": "Coherent", "answer": "Logical and consistent.", "deck_id": 1, "tags": "vocabulary;intermediate"},
-    {"question": "Scrutinize", "answer": "To examine or inspect closely and thoroughly.", "deck_id": 1, "tags": "vocabulary;intermediate"},
-    {"question": "Plausible", "answer": "Seeming reasonable or probable.", "deck_id": 1, "tags": "vocabulary;intermediate"},
-    {"question": "Inherent", "answer": "Existing in something as a permanent, essential, or characteristic attribute.", "deck_id": 1, "tags": "vocabulary;intermediate"},
-    {"question": "Mitigate", "answer": "To make less severe, serious, or painful.", "deck_id": 1, "tags": "vocabulary;intermediate"},
-    {"question": "Conundrum", "answer": "A confusing and difficult problem or question.", "deck_id": 1, "tags": "vocabulary;intermediate"}
-]
+cards_data = ([
+    {"question": "Arbitrary", "answer": "Based on random choice or personal whim, rather than any reason or system.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Comprehensive", "answer": "Complete and including everything that is necessary.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Facilitate", "answer": "To make an action or process easy or easier.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Intrinsic", "answer": "Belonging naturally; essential.", "deck_id": 1, "tags": "vocabulary;intermediate"},
+    {"question": "Redundant", "answer": "Not or no longer needed or useful; superfluous.", "deck_id": 1, "tags": "vocabulary;intermediate"}
+])
+
 
 # Define the CSV file name
 csv_file_name = "flashcards.csv"

@@ -298,11 +298,15 @@ def update_tag(request, tag_id):
 
 
 def upload_csv(request):
+    cards_written = 0
+    encountered_cards = 0
+
     if request.method == "POST":
         form = CsvForm(request.POST, request.FILES)
         if form.is_valid():
             csv_file = request.FILES["file"]
             cards = read_cards_from_csv(csv_file)
+            encountered_cards = len(cards)
             user = request.user
             for card_data in cards:
                 try:
@@ -314,19 +318,20 @@ def upload_csv(request):
                     answer=card_data["answer"],
                     deck=deck,
                 )
-                cards = card_data["tags"]
+                tags = card_data["tags"]
 
-                for tag_name in cards:
+                for tag_name in tags:
                     tag, created = Tag.objects.get_or_create(name=tag_name, user=user)
                     card.tags.add(tag)
                 card.save()
+                cards_written = cards_written + 1
             card_ids = list(
                 Card.objects.filter(deck__user=request.user).values_list(
                     "id", flat=True
                 )
             )
             request.session["card_ids"] = card_ids
-            messages.success(request, "Cards added successfully.")
+            messages.success(request, f"Encountered {encountered_cards} cards, written {cards_written} cards.")
             return redirect("flashcards_app:home")
     else:
         form = CsvForm()
