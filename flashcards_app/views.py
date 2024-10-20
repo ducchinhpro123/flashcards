@@ -24,9 +24,6 @@ from .forms import TagForm, CardForm, DeckForm, DeckAndTagsForm, CardFormTest, C
 from .models import Deck, Card, Tag
 
 
-# Create your views here.
-
-
 def home(request):
     user = request.user
     if user.is_authenticated:
@@ -114,7 +111,8 @@ def add_card(request):
         return render(
             request,
             "flashcards_app/add_card.html",
-            context={"form": form, "tag_form": tag_form, "deck_form": deck_form},
+            context={"form": form, "tag_form": tag_form,
+                     "deck_form": deck_form},
         )
 
 
@@ -198,7 +196,8 @@ def next_card(request):
         card_ids = request.session["card_ids"]
     else:
         card_ids = list(
-            Card.objects.filter(deck__user=request.user).values_list("id", flat=True)
+            Card.objects.filter(
+                deck__user=request.user).values_list("id", flat=True)
         )
         request.session["card_ids"] = card_ids
 
@@ -321,7 +320,8 @@ def upload_csv(request):
                 tags = card_data["tags"]
 
                 for tag_name in tags:
-                    tag, created = Tag.objects.get_or_create(name=tag_name, user=user)
+                    tag, created = Tag.objects.get_or_create(
+                        name=tag_name, user=user)
                     card.tags.add(tag)
                 card.save()
                 cards_written = cards_written + 1
@@ -331,7 +331,8 @@ def upload_csv(request):
                 )
             )
             request.session["card_ids"] = card_ids
-            messages.success(request, f"Encountered {encountered_cards} cards, written {cards_written} cards.")
+            messages.success(request, f"Encountered {
+                             encountered_cards} cards, written {cards_written} cards.")
             return redirect("flashcards_app:home")
     else:
         form = CsvForm()
@@ -363,15 +364,18 @@ def export_cards_to_pdf(request):
 
     for card in cards:
         card["deck"] = Deck.objects.get(id=card["deck_id"]).name
-        card['tags'] = [tag.name for tag in Tag.objects.filter(cards__id=card['id'])]
+        card['tags'] = [
+            tag.name for tag in Tag.objects.filter(cards__id=card['id'])]
 
     file_path = "cards.pdf"
     doc = SimpleDocTemplate(file_path, pagesize=letter)
     elements = []
 
     styles = getSampleStyleSheet()
-    styles.add(ParagraphStyle(name='TableHeader', alignment=TA_CENTER, fontSize=12, fontName='Helvetica-Bold'))
-    styles.add(ParagraphStyle(name='TableContent', alignment=TA_CENTER, fontSize=10, fontName='Helvetica'))
+    styles.add(ParagraphStyle(name='TableHeader', alignment=TA_CENTER,
+               fontSize=12, fontName='Helvetica-Bold'))
+    styles.add(ParagraphStyle(name='TableContent',
+               alignment=TA_CENTER, fontSize=10, fontName='Helvetica'))
 
     data = [[
         Paragraph("Question", styles['TableHeader']),
@@ -387,7 +391,8 @@ def export_cards_to_pdf(request):
             Paragraph(', '.join(card['tags']), styles['TableContent'])
         ])
 
-    table = Table(data, colWidths=[2.5 * inch, 2.5 * inch, 1.5 * inch, 1.5 * inch])
+    table = Table(data, colWidths=[2.5 * inch,
+                  2.5 * inch, 1.5 * inch, 1.5 * inch])
     table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),

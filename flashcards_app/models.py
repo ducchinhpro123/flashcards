@@ -12,6 +12,7 @@ class Card(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     last_reviewed_at = models.DateTimeField(null=True, blank=True)
     review_interval = models.IntegerField(default=1, null=True, blank=True)
+    objects = models.Manager()
 
     def __str__(self):
         return self.question
@@ -20,6 +21,7 @@ class Card(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=50)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
+    objects = models.Manager()
 
     def __str__(self):
         return self.name
@@ -31,6 +33,7 @@ class Deck(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = models.Manager()
 
     def __str__(self):
         return self.name
