@@ -1,0 +1,55 @@
+.venv/
+
+# Python-specific ignores
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+
+# Django-specific ignores
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+db.sqlite3-journal
+media
+staticfiles
+*.mo
+*.pot
+*.py[cod]
+*.sqlite3
+*.pyo
+*.pyd
+*.db
+
+# Django migrations
+*/migrations/*
+!*/migrations/__init__.py
+
+# IDE-specific ignores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/

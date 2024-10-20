@@ -6,24 +6,6 @@ This flashcard app helps memorize keywords, and its body is easy to use. It is b
 idea for this project came from [Anki](https://apps.ankiweb.net/).
 It supports uploading CSV files to add flashcards quickly and export as a pdf file.
 
-## Home page
-![Home page](2024-06-20_16-09-home-page.png)
-
-## Backend
-
-- **Django**: A high-level Python web framework that encourages rapid development and clean, pragmatic design.
-    - Models, Views, Templates
-    - Django Admin
-    - Form handling and validation
-    - User authentication
-
-### Frontend
-
-- **HTML/CSS**: Standard technologies for creating and styling the user interface.
-- **JavaScript/JQuery**: Used for enhancing interactivity and user experience.
-- **Bootstrap**: A popular CSS framework for responsive, mobile-first front-end web development.
-- **CKEditor 5**: A rich text editor used for the 'answer' field in the flashcards.
-
 ### Database
 
 - **MySQL**: Used to handle data storage for user accounts, decks, cards, and tags.
